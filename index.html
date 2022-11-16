@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>영화 검색 사이트</title>
+  <!--font-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&family=Outfit:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <!--css-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
+  <link href="./css/font-awesome.min.css" rel="stylesheet">
+  <link href="./css/main.css" rel="stylesheet">
+  <!--script-->
+  <script defer type="module" src="./js/main.js"></script>
+</head>
+<body>
+  <i class="fa fa-magnet logo"></i>
+  <main>
+    <div class="text-content">
+      <ul>
+        <li>
+          <h2>SEARCH MOVIES</h2>
+          <span>API to search for movies</span>
+          <p>set the release year and the number of<br>
+            movies loaded during search and infinity scroll.
+          </p>
+        </li>
+        <li>
+          <h2>2022</h2>
+          <p>JavaScript is hard But it's fun,<br>
+            but I don't want to do it<br>
+            but You have to do it. Oh no
+          </p>
+        </li>
+      </ul>
+    </div>
+    <div class="movies-content">
+      <div class="search">
+        <div class="search-inner">
+          <input type="text">
+          <span class="search-btn"><i class="fa fa-search"></i></span>
+        </div>
+        <select class="movies-years">
+          <option value selected>Year</option>
+        </select>
+        <select class="movies-count">
+          <option value="1">10</option>
+          <option value="2">20</option>
+          <option value="3">30</option>
+        </select>
+      </div>
+
+      <div class="movies-list type2">
+        <div class="movies">
+          <span>
+            <img src="./images/search.png">
+          </span>
+        </div>
+        <div class="more">more</div>
+      </div>
+      
+      <div class="loading">
+        <div class="loader">Loading...</div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
