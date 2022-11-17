@@ -569,6 +569,8 @@ searchBtnEl.addEventListener("click", async ()=>{
     } else {
         let year = selectYear.value;
         page = 1; // 페이지 초기화
+        // 로딩
+        loading.classList.add("show");
         // 영화 가져오기
         const getmovies = await (0, _getMoviesJs.getMovies)(title, year, page);
         moviesEl.innerHTML = ""; // 검색 타이틀 초기화
@@ -578,12 +580,16 @@ searchBtnEl.addEventListener("click", async ()=>{
         let pageShow = selectCnt.value;
         for(let i = 1; i < pageShow; i++)moreMovies();
     }
+    // 로딩
+    loading.classList.remove("show");
 });
 // 더보기 버튼
-moreBtnEl.addEventListener("click", async ()=>{
-    let pageShow = selectCnt.value;
-    for(let i = 1; i <= pageShow; i++)moreMovies();
-});
+// moreBtnEl.addEventListener('click', async () => {
+//   let pageShow = selectCnt.value;
+//   for (let i = 1; i <= pageShow; i++) {
+//     moreMovies();
+//   }
+// });
 // 더보기 페이지 증가
 async function moreMovies() {
     let year = selectYear.value;
@@ -595,6 +601,8 @@ async function moreMovies() {
     if (totalMovies / 10 <= page) infiniteScroll = false;
     // 영화 리스트 랜더링
     (0, _renderMoviesJs.renderMovies)(getmovies, page, infiniteScroll);
+    // 로딩
+    loading.classList.remove("show");
 }
 // 무한 스크롤
 // 1. 인터섹션 옵저버 생성
@@ -671,25 +679,22 @@ var _mainJs = require("./main.js");
 function renderMovies(movies, page, infiniteScroll) {
     // 총 영화 개수
     const totalMovies = Number(movies.total);
-    // 로딩
-    (0, _mainJs.loading).classList.add("show");
     (0, _mainJs.moreBtnEl).classList.remove("show");
     // 검색된 영화 없을 때
     if ((0, _mainJs.moviesEl).hasChildNodes() && !movies.movies) {
         infiniteScroll = false;
+        // 로딩
         (0, _mainJs.loading).classList.remove("show");
         (0, _mainJs.moreBtnEl).classList.remove("show");
-        console.log("마지막 페이지");
-        return false;
-    } else if (!movies.movies) {
+        return;
+    }
+    if (!movies.movies) {
         infiniteScroll = false;
+        // 로딩
         (0, _mainJs.loading).classList.remove("show");
         (0, _mainJs.moreBtnEl).classList.remove("show");
         alert("검색된 영화가 없습니다.");
-        (0, _mainJs.moviesEl).innerHTML = /* html */ `
-       <span><img src="./images/search.png" /></span>
-    `;
-        return false;
+        return;
     }
     for (const movie of movies.movies){
         const el = document.createElement("div");
@@ -698,18 +703,13 @@ function renderMovies(movies, page, infiniteScroll) {
         // 영화 정보 뿌리기
         el.classList.add("movie");
         el.append(h1El, imgEl);
+        // 영화 포스터
+        imgEl.src = movie.Poster !== "N/A" ? movie.Poster : "./images/noImage.png";
         // 영화 타이틀
         h1El.textContent = movie.Title;
         h1El.addEventListener("click", ()=>{
             console.log(movie.Title);
         });
-        // 영화 포스터
-        imgEl.src = movie.Poster;
-        console.log(imgEl.src);
-        if (imgEl.src === "N/A") {
-            console.log(imgEl.src);
-            imgEl.src = "./noImage.png";
-        }
         // el.innerHTML = /* html */ `
         //   <h1>${movie.Title}</h1>
         //   <img src="${movie.Poster}" />
@@ -720,8 +720,6 @@ function renderMovies(movies, page, infiniteScroll) {
         // })
         (0, _mainJs.moviesEl).append(el);
     }
-    // 로딩
-    (0, _mainJs.loading).classList.remove("show");
     // 마지막 페이지
     if (totalMovies / 10 <= page) (0, _mainJs.moreBtnEl).classList.remove("show");
     else (0, _mainJs.moreBtnEl).classList.add("show");

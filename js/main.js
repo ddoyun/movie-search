@@ -28,12 +28,11 @@ for (let i = optionYear; i > optionYear - 38; i--) {
   selectYear.append(yearEl);
 }
 
-
-
 // 검색 기능
 document.querySelector('input').addEventListener('input', (e) => {
   title = e.target.value;
 });
+
 searchBtnEl.addEventListener('click', async () => {
   // 무한 스크롤
   infiniteScroll = true;
@@ -44,6 +43,9 @@ searchBtnEl.addEventListener('click', async () => {
   } else {
     let year = selectYear.value;
     page = 1;  // 페이지 초기화
+
+    // 로딩
+    loading.classList.add('show');
 
     // 영화 가져오기
     const getmovies = await getMovies(title, year, page);
@@ -58,15 +60,17 @@ searchBtnEl.addEventListener('click', async () => {
       moreMovies();
     }
   }
+  // 로딩
+  loading.classList.remove('show');
 });
 
 // 더보기 버튼
-moreBtnEl.addEventListener('click', async () => {
-  let pageShow = selectCnt.value;
-  for (let i = 1; i <= pageShow; i++) {
-    moreMovies();
-  }
-});
+// moreBtnEl.addEventListener('click', async () => {
+//   let pageShow = selectCnt.value;
+//   for (let i = 1; i <= pageShow; i++) {
+//     moreMovies();
+//   }
+// });
 
 // 더보기 페이지 증가
 async function moreMovies() {
@@ -84,6 +88,8 @@ async function moreMovies() {
 
   // 영화 리스트 랜더링
   renderMovies(getmovies, page, infiniteScroll);
+  // 로딩
+  loading.classList.remove('show');
 }
 
 // 무한 스크롤
