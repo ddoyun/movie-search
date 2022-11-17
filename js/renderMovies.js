@@ -46,7 +46,7 @@ export function renderMovies(movies, page, infiniteScroll) {
     console.log(imgEl.src);
     if (imgEl.src === 'N/A') {
       console.log(imgEl.src);
-      imgEl.src = './noImage.png';
+      imgEl.src = './images/noImage.png';
     }
 
     // el.innerHTML = /* html */ `
